@@ -1,11 +1,14 @@
 import { Link } from '../components/Link'
-export default function HomePage () {
+import { useI18n } from '../hooks/usei18n'
+
+export default function HomePage ({ routeParams }) {
+  const i18n = useI18n(routeParams.lang ?? 'en', 'home')
   return (
     <>
-      <h1>Home</h1>
-      <p>this is a example page to create a React Router from scratch </p>
+      <h1>{i18n.title}</h1>
+      <p>{i18n.description}</p>
       <Link to='/about'>
-        Go to about us
+        {i18n.anchor}
       </Link>
     </>
   )
