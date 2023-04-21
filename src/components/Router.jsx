@@ -1,13 +1,14 @@
 import { useState, useEffect, Children } from 'react'
 import { EVENT } from '../consts'
 import { match } from 'path-to-regexp'
+import { getCurrentPath } from '../utils/utils'
 
 export function Router ({ children, routes = [], defaultComponent: DefaultComponent = () => <h1>404 Page not found</h1> }) {
-  const [currentPath, setCurrentPath] = useState(window.location.pathname)
+  const [currentPath, setCurrentPath] = useState(getCurrentPath())
 
   useEffect(() => {
     const onLocationChange = () => {
-      setCurrentPath(window.location.pathname)
+      setCurrentPath(getCurrentPath())
     }
 
     window.addEventListener(EVENT.PUSHSTATE, onLocationChange)
