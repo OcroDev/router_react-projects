@@ -1,3 +1,3 @@
-export function Route ({ path, component }) {
+export function Route ({ path, Component }) {
   return null
 }
