@@ -1,9 +1,13 @@
 import { useState, useEffect, Children } from 'react'
 import { EVENT } from '../consts'
+import { getCurrentPath } from '../utils/utils.js'
 import { match } from 'path-to-regexp'
-import { getCurrentPath } from '../utils/utils'
 
-export function Router ({ children, routes = [], defaultComponent: DefaultComponent = () => <h1>404 Page not found</h1> }) {
+export function Router ({
+  children, routes = [], defaultComponent: DefaultComponent = () => {
+    return <h1>404 Page not found</h1>
+  }
+}) {
   const [currentPath, setCurrentPath] = useState(getCurrentPath())
 
   useEffect(() => {
@@ -20,7 +24,6 @@ export function Router ({ children, routes = [], defaultComponent: DefaultCompon
     }
   }, [])
   let routeParams = {}
-  // add routes from children <Route/> components
 
   const routesChildren = Children.map(children, ({ props, type }) => {
     const { name } = type
@@ -28,7 +31,6 @@ export function Router ({ children, routes = [], defaultComponent: DefaultCompon
     return isRoute ? props : null
   })
 
-  // const routesToUse = routesChildren.concat(routes)
   const routesToUse = routes.concat(routesChildren).filter(Boolean)
 
   const Page = routesToUse.find(({ path }) => {
